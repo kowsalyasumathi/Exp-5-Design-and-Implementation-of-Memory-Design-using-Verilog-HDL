@@ -85,6 +85,7 @@ endmodule
 
 # output Waveform
 
+<img width="1920" height="1080" alt="Screenshot (403)" src="https://github.com/user-attachments/assets/17474b17-2c18-4c28-a360-5bc46f8dd52d" />
 
 
 # ROM
@@ -96,6 +97,8 @@ endmodule
 
  # FIFO
  // write verilog code for FIFO
+
+ 
  
  // Test bench
 
