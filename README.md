@@ -21,7 +21,6 @@ Analyze the output waveforms in the simulation window, and verify that the corre
 7. Save and Document Results
 Capture screenshots of the waveform and save the simulation logs. These will be included in the lab report.
 
-# Code
 # RAM
 # Verilog code
 ```
