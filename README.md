@@ -97,13 +97,118 @@ endmodule
 
  # FIFO
  // write verilog code for FIFO
+```
+module fifo_sync (clk,rst,wr_en,rd_en,data_in,full,data_out,empty,count);
+    input clk;
+    input rst;
+    input wr_en;
+    input [7:0] data_in;
+    input rd_en;
+    output reg full;
+    output reg [7:0] data_out;
+    output reg empty;
+    output reg [4:0] count;
 
+    reg [7:0] mem [0:15];
+    reg [3:0] wr_ptr;
+    reg [3:0] rd_ptr;
+always @(posedge clk) 
+   begin
+        if (rst) 
+          begin
+            wr_ptr   <= 0;
+            rd_ptr   <= 0;
+            count    <= 0;
+            data_out <= 0;
+            full     <= 0;
+            empty    <= 1;
+          end 
+      else 
+        begin
+            full  <= (count == 16);
+            empty <= (count == 0);
+if (wr_en && !full) 
+     begin
+            mem[wr_ptr] <= data_in;
+            wr_ptr <= wr_ptr + 1'b1;
+      end
+
+  if (rd_en && !empty) 
+      begin
+                data_out <= mem[rd_ptr];
+                rd_ptr <= rd_ptr + 1'b1;
+      end
+
+case ({wr_en && !full, rd_en && !empty})
+                2'b10: count <= count + 1'b1;
+                2'b01: count <= count - 1'b1;
+                default: count <= count;
+endcase
+ full  <= (count == 16);
+            empty <= (count == 0);
+        end
+    end
+endmodule
+```
  
  
  // Test bench
+ ```
+`timescale 1ns/1ps
+
+module fifo_sync_tb;
+    reg clk;
+    reg rst;
+    reg wr_en;
+    reg rd_en;
+    reg [7:0] data_in;
+    wire [7:0] data_out;
+    wire full;
+    wire empty;
+    wire [4:0] count;
+
+   fifo_sync uut (clk,rst,wr_en,rd_en,data_in,full,data_out,empty,count );
+
+ always #5 clk = ~clk;
+
+ initial 
+     begin
+        clk = 0;
+        rst = 1;
+        wr_en = 0;
+        rd_en = 0;
+        data_in = 8'h00;            #10;
+        rst = 0;                          #10;
+        rst = 1;                          #10;
+        rst = 0;                         
+
+  repeat (5) 
+     begin
+            @(posedge clk);
+            wr_en = 1;
+            data_in = data_in + 1;
+     end
+        @(posedge clk);
+        wr_en = 0;
+ repeat (3) 
+          begin
+            @(posedge clk);
+            rd_en = 1;
+        end
+        @(posedge clk);
+        rd_en = 0;
+ #20;
+        $finish;
+    end
+
+endmodule
+```
+ 
 
 // output Waveform
-
+```
+<img width="1920" height="1080" alt="Screenshot (404)" src="https://github.com/user-attachments/assets/17c3089d-e496-400c-9110-f77cfbb8f0a1" />
+```
 
 
 # Conclusion
