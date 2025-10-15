@@ -22,10 +22,69 @@ Capture screenshots of the waveform and save the simulation logs. These will be 
 # Code
 # RAM
 // Verilog code
+```
+module ram_4kb (clk,we,addr,din,dout);
+    input clk;
+    input we;                  // Write Enable
+    input [11:0] addr;         // 12-bit Address = 4096 locations
+    input [7:0] din;           // Data input
+    output reg [7:0] dout;      // Data output
 
+
+reg [7:0] mem [0:4095];        // 4KB = 4096 x 8-bit
+
+always @(posedge clk) 
+begin
+    if (we)
+        mem[addr] <= din;      // Write operation
+        dout <= mem[addr];         // Read operation
+end
+
+endmodule
+```
 // Test bench
+```
+module tb_ram_4kb;
+
+reg clk;
+reg we;
+reg [11:0] addr;
+reg [7:0] din;
+wire [7:0] dout;
+
+integer i;
+
+
+ram_4kb dut (clk,we,addr,din,dout);
+
+initial begin
+    clk = 0;
+    forever  #5 clk = ~clk;
+end
+initial 
+   begin
+    we = 0;
+    addr = 0;
+    din = 0;
+    #10;
+
+       for (i = 0; i < 20; i = i + 1) 
+        begin
+        @(posedge clk);
+        addr = $random % 4096;   // Random address (0–4095)
+        din  = $random % 256;    // Random 8-bit data (0–255)
+        we   = 1;
+        @(posedge clk);
+        we   = 0;
+        end
+$finish;
+end
+endmodule
+```
 
 // output Waveform
+
+
 
 # ROM
  // write verilog code for ROM using $random
