@@ -206,10 +206,8 @@ endmodule
  
 
 // output Waveform
-```
-<img width="1920" height="1080" alt="Screenshot (404)" src="https://github.com/user-attachments/assets/1f315bd5-8fa6-4102-9882-9c7b57619b96" />
 
-```
+<img width="1920" height="1080" alt="Screenshot (404)" src="https://github.com/user-attachments/assets/551001af-44b6-4548-ad0f-3d3e6b5569d4" />
 
 
 # Conclusion
