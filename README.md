@@ -1,5 +1,7 @@
 # Exp-5-Design-and-Simulate the-Memory-Design-using-Verilog-HDL
+
 #Aim
+
 To design and simulate a RAM,ROM,FIFO using Verilog HDL, and verify its functionality through a testbench in the Vivado 2023.1 environment.
 Apparatus Required
 Vivado 2023.1
@@ -21,7 +23,7 @@ Capture screenshots of the waveform and save the simulation logs. These will be 
 
 # Code
 # RAM
-// Verilog code
+# Verilog code
 ```
 module ram_4kb (clk,we,addr,din,dout);
     input clk;
@@ -42,7 +44,7 @@ end
 
 endmodule
 ```
-// Test bench
+# Test bench
 ```
 module tb_ram_4kb;
 
@@ -82,7 +84,7 @@ end
 endmodule
 ```
 
-// output Waveform
+# output Waveform
 
 
 
